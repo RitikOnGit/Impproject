@@ -1,11 +1,42 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Random Position Button</title>
-  <style>
-    #randomButton {
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Important For You</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<style>
+    body {
+    font-family: Arial, sans-serif;
+}
+
+.container {
+    width: 80%;
+    margin: 0 auto;
+    text-align: center;
+}
+
+button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+#text {
+    font-size: 20px;
+    padding: 10px;
+    display: inline-block;
+}
+.randomButton {
   position: absolute;
   padding: 10px 20px;
   background-color: #007bff;
@@ -14,26 +45,179 @@
   cursor: pointer;
   transition: 0.3s ease-in-out;
 }
-
-
-  </style>
-</head>
-<body>
-  <button id="randomButton">Hover Me!</button>
-  
-  <script>
-function setRandomPosition() {
-  const button = document.getElementById('randomButton');
-  const randomX = Math.random() * (window.innerWidth - button.offsetWidth);
-  const randomY = Math.random() * (window.innerHeight - button.offsetHeight);
-  
-  button.style.left = `${randomX}px`;
-  button.style.top = `${randomY}px`;
+#box1, #box2, #box3, #box4, #box5{
+    display: none;
 }
+.dblock{
+    display: block!important;
+}
+.center{
+    display: flex;
+    justify-content: center;
+}
+.titletxt{
+    font-size: 24px;
+}
+#gender{
+    font-size: 16px;
+    padding: 4px;
+}
+.twobtn{
+    display: flex;
+    width: 50%;
+    margin-left: 25%;
+    margin-top:2rem
+}
+.twobtn .btndiv{
+    width: 50%;
+}
+</style>
+<body>
+    <div class="container">
+        <h1>Welcome to the Important Task</h1>
+        <p>Answer the following question truthfully</p>
+        <div id="text"></div>
+        <button id="start" onclick="start()">Start</button>
 
-const button = document.getElementById('randomButton');
-button.addEventListener('mouseenter', setRandomPosition);
+        <div id="box1" class="center">
+            <div>
+                <select id="gender">
+                    <option disables>Select Gender</option>
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                </select>
+            </div>
+            <div class="center" style="margin-bottom: 12px;">
+                <button id="nextButton" style="display: none;margin:6px" onclick="next('box1','box2','qtn1')">Next</button>
+            </div>
+            
+        </div>
+        <div id="box2">
+            <div class="titletxt"></div>
+            <div class="twobtn">
+                <div class="btndiv" style="margin-top:5px;">
+                    <button onclick="next('box2','box3','qtn2')">Yes</button>
+                </div>
+                <div class="btndiv center" style="margin:6px">
+                    <button class="randomButton" id="randomButton">No</button>
+                </div>
+            </div>
+            
+        </div>
+        <div id="box3">
+        <p id="">| Great |<br> Answer this question as well</p>
+        <div class="titletxt"></div>
+        <div class="twobtn">
+            <div class="btndiv center" style="margin:6px">
+                <button class="randomButton" id="randomButton2">20</button>
+            </div>
+            <div class="btndiv" style="margin-top:5px;">
+                <button onclick="next('box3','box4','qtn3')">1010</button>
+            </div>
+        </div>
+        </div>
+        <div id="box4">
+        <p id="">Well Done here is last question for you</p>
+        <div class="titletxt"></div>
+        <div class="twobtn">
+            <div class="btndiv" style="margin-top:5px;">
+                <button id="namebtn" onclick="next('box4','box5','qtn4')">Me</button>
+            </div>
+            <div class="btndiv center" style="margin:6px">
+                <button class="randomButton" id="randomButton3">Website</button>
+            </div>
+        </div>
+        </div>
+     
+      <div id="box5">
+      <iframe id="videoFrame" width="560" height="315" src="https://www.youtube.com/embed/ScOKqxtgv3s?si=rlLQad3KEADMOSHk" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+</div>
+      <!-- <button id="playButton">Play Video</button> -->
+    </div>
 
-  </script>
+
+    <script>
+document.getElementById('gender').addEventListener('change', function() {
+    var nextButton = document.getElementById('nextButton');
+    nextButton.style.display = 'block';
+});
+
+
+    function next(close,open,type){
+        document.getElementById(close).style.display= 'none';
+        document.getElementById(open).style.display= 'block';
+        let gender = $('#gender').val();
+        if(type == 'qtn1'){
+            let textElement = $('#'+open + ' .titletxt')[0];
+            console.log(textElement);
+            let typetext = '';
+            if(gender == 'female'){
+                typetext = 'handsome';
+            }else{
+                typetext = 'beautiful';
+            }
+            typeEffect(textElement, `Hey ${name}, Answer this question| Are you ${typetext} ?`);
+            let button = document.getElementById('randomButton');
+            button.addEventListener('mouseenter',function(){ setRandomPosition('randomButton')});
+        }
+        else if(type == 'qtn2'){
+            let textElement = $('#'+open + ' .titletxt')[0];
+            typeEffect(textElement, `So ${name}, What is 10 + 10 ?`);
+            let button = document.getElementById('randomButton2');
+            button.addEventListener('mouseenter',function(){ setRandomPosition('randomButton2')});
+        }
+        else if(type == 'qtn3'){
+            let textElement = $('#'+open + ' .titletxt')[0];
+            let typetext = '';
+            typeEffect(textElement, `So ${name}, Who is Dumb here ?`);
+            document.getElementById('namebtn').innerText = `${name}`;
+            let button = document.getElementById('randomButton3');
+            button.addEventListener('mouseenter',function(){ setRandomPosition('randomButton3')});
+        }
+        else if(type == 'qtn4'){
+            playvid();
+        }
+    }
+    let name = '';
+    function start() {
+            name = prompt('Please Enter your name');
+            let textElement = document.getElementById('text');
+            typeEffect(textElement, `Hi ${name}, welcome to this important task`);
+            document.getElementById('start').style.display= 'none';
+            setTimeout(function() {
+            document.getElementById('box1').style.display= 'block';
+            }, 2500); // 2000 milliseconds = 2 seconds
+            }
+
+        function typeEffect(element, text) {
+            let index = 0;
+            const speed = 54; // typing speed in milliseconds
+            function type() {
+                if (index < text.length) {
+                    element.textContent += text.charAt(index);
+                    index++;
+                    setTimeout(type, speed);
+                }
+            }
+            type();
+        }
+
+        function setRandomPosition(id) {
+        const button = document.getElementById(id);
+        const randomX = Math.random() * (window.innerWidth - button.offsetWidth);
+        const randomY = Math.random() * (window.innerHeight - button.offsetHeight);
+        
+        button.style.left = `${randomX}px`;
+        button.style.top = `${randomY}px`;
+        }
+
+function playvid() {
+    var videoFrame = document.getElementById('videoFrame');
+    var src = videoFrame.getAttribute('src');
+    src += '&autoplay=1'; // Append the autoplay parameter
+    videoFrame.setAttribute('src', src);
+  }
+
+    </script>
 </body>
 </html>
